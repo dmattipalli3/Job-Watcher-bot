@@ -64,13 +64,13 @@ while True:
     old_data = load_last_snapshot()
 
 # ⚠️ If no snapshot exists, save and skip notifications
-if old_data == "":
-    print("📂 First-time run: saving current data without sending alerts")
-    save_snapshot(new_data)
-    time.sleep(CHECK_INTERVAL_MINUTES * 60)
-    continue
+    if old_data == "":
+        print("📂 First-time run: saving current data without sending alerts")
+        save_snapshot(new_data)
+        time.sleep(CHECK_INTERVAL_MINUTES * 60)
+        continue
 
-new_lines = detect_new_lines(old_data, new_data)
+    new_lines = detect_new_lines(old_data, new_data)
 
 
     # Filter lines that look like job postings (contain a "|" and "http")
