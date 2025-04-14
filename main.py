@@ -3,8 +3,8 @@ import time
 import os
 
 GITHUB_RAW_URL = "https://raw.githubusercontent.com/SimplifyJobs/Summer2025-Internships/dev/README-Off-Season.md"
-TELEGRAM_BOT_TOKEN = os.environ["7609886460:AAF4qjUEl2pLPT7jvw18zJ57vXYbAn0c24M"]
-TELEGRAM_CHAT_ID = os.environ["7401872854"]
+TELEGRAM_BOT_TOKEN = os.environ["TELEGRAM_BOT_TOKEN"]
+TELEGRAM_CHAT_ID = os.environ["TELEGRAM_CHAT_ID"]
 DATA_FILE = "last_snapshot.txt"
 CHECK_INTERVAL_MINUTES = 1  # Check every minute
 
