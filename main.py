@@ -12,11 +12,12 @@ print("✅ Got bot token")
 TELEGRAM_CHAT_ID = os.environ["TELEGRAM_CHAT_ID"]
 print("✅ Got chat ID")
 
-# Configuration variables
+# Configuration
 GITHUB_RAW_URL = "https://raw.githubusercontent.com/SimplifyJobs/Summer2025-Internships/dev/README-Off-Season.md"
 DATA_FILE = "last_snapshot.txt"
-CHECK_INTERVAL_MINUTES = 1  # Check every minute (adjust as needed)
+CHECK_INTERVAL_MINUTES = 1
 
+# --- Functions ---
 def fetch_markdown():
     print("🔍 Fetching markdown from GitHub...")
     response = requests.get(GITHUB_RAW_URL)
@@ -57,13 +58,28 @@ def save_snapshot(data):
         f.write(data)
     print("✅ Snapshot saved to file")
 
+# 🚨 One-time manual test to send the current last job from GitHub
+print("📄 Fetching latest job for manual test...")
+full_text = fetch_markdown()
+all_job_lines = [line for line in full_text.splitlines() if "|" in line and "http" in line]
+
+if all_job_lines:
+    latest_job = all_job_lines[-1]
+    test_message = "🚨 Manual test — latest job from GitHub:\n" + latest_job
+    send_telegram_message(test_message)
+    print("✅ Sent latest job via Telegram:")
+    print(latest_job)
+else:
+    print("⚠️ No job lines found in GitHub file.")
+
+# 🔁 Start main loop
 print("🚀 Entering main loop...")
 while True:
     print("🔁 Looping...")
     new_data = fetch_markdown()
     old_data = load_last_snapshot()
 
-# ⚠️ If no snapshot exists, save and skip notifications
+    # Skip alerts on first run
     if old_data == "":
         print("📂 First-time run: saving current data without sending alerts")
         save_snapshot(new_data)
@@ -71,9 +87,6 @@ while True:
         continue
 
     new_lines = detect_new_lines(old_data, new_data)
-
-
-    # Filter lines that look like job postings (contain a "|" and "http")
     job_lines = [line for line in new_lines if "|" in line and "http" in line]
     print("🔍 Found", len(job_lines), "job lines")
 
@@ -81,8 +94,6 @@ while True:
         message = "🚨 " + "\n".join(job_lines[:5])
         send_telegram_message(message)
         print("✅ Alert sent.")
-        print("🖨️ Last job sent in alert:")
-        print(job_lines[-1])
         save_snapshot(new_data)
     else:
         print("🟢 No new postings.")
