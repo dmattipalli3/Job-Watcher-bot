@@ -81,6 +81,8 @@ while True:
         message = "🚨 " + "\n".join(job_lines[:5])
         send_telegram_message(message)
         print("✅ Alert sent.")
+        print("🖨️ Last job sent in alert:")
+        print(job_lines[-1])
         save_snapshot(new_data)
     else:
         print("🟢 No new postings.")
