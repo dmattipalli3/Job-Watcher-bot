@@ -65,7 +65,7 @@ while True:
     new_lines = detect_new_lines(old_data, new_data)
 
     # 🔥 Simulate a fake job posting for testing purposes:
-    new_lines.append("| [Test Company](https://example.com) | SDE Intern | Summer 2025 |")
+    new_lines.append("| [Test Company](https://example.com) | SDE Co-op | Winter 2025 |")
     print("🔥 Appended test job line for simulation")
 
     # Filter lines that look like job postings (contain a "|" and "http")
