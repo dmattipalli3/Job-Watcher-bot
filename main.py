@@ -64,7 +64,7 @@ full_text = fetch_markdown()
 all_job_lines = [line for line in full_text.splitlines() if "|" in line and "http" in line]
 
 if all_job_lines:
-    latest_job = all_job_lines[-1]
+    latest_job = all_job_lines[0]
     test_message = "🚨 Manual test — latest job from GitHub:\n" + latest_job
     send_telegram_message(test_message)
     print("✅ Sent latest job via Telegram:")
