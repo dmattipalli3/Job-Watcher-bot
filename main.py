@@ -62,7 +62,16 @@ while True:
     print("🔁 Looping...")
     new_data = fetch_markdown()
     old_data = load_last_snapshot()
-    new_lines = detect_new_lines(old_data, new_data)
+
+# ⚠️ If no snapshot exists, save and skip notifications
+if old_data == "":
+    print("📂 First-time run: saving current data without sending alerts")
+    save_snapshot(new_data)
+    time.sleep(CHECK_INTERVAL_MINUTES * 60)
+    continue
+
+new_lines = detect_new_lines(old_data, new_data)
+
 
     # Filter lines that look like job postings (contain a "|" and "http")
     job_lines = [line for line in new_lines if "|" in line and "http" in line]
