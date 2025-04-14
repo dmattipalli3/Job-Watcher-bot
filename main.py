@@ -64,10 +64,6 @@ while True:
     old_data = load_last_snapshot()
     new_lines = detect_new_lines(old_data, new_data)
 
-    # 🔥 Simulate a fake job posting for testing purposes:
-    new_lines.append("| [Test Company](https://example.com) | SDE Co-op | Winter 2025 |")
-    print("🔥 Appended test job line for simulation")
-
     # Filter lines that look like job postings (contain a "|" and "http")
     job_lines = [line for line in new_lines if "|" in line and "http" in line]
     print("🔍 Found", len(job_lines), "job lines")
